@@ -1,19 +1,7 @@
 import Link from 'next/link';
-import React, { useEffect } from 'react';
-// import Isotope from 'isotope-layout';
+import React from 'react';
 
 const ItemList = ({ list, imgUrl }) => {
-  // useEffect(() => {
-  //   //isotope layout
-  //   const grid = document.querySelector('.dogs_list');
-  //   const iso = new Isotope(grid, {
-  //     // options...
-  //     itemSelector: '.dogs_item',
-  //     masonry: {
-  //       columnWidth: 200,
-  //     },
-  //   });
-  // }, []);
   return (
     <>
       <ul className="dogs_list">
@@ -21,7 +9,9 @@ const ItemList = ({ list, imgUrl }) => {
           <Link href={`/view/${idx}`}>
             <li className="dogs_item" key={`${idx}_${new Date().toString()}`}>
               <span>{cur}</span>
-              <img src={imgUrl[idx]} alt={cur} />
+              <div className="img_wrap">
+                <img src={imgUrl[idx]} alt={cur} />
+              </div>
             </li>
           </Link>
         ))}
