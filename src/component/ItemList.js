@@ -1,16 +1,16 @@
 import Link from 'next/link';
 import React from 'react';
 
-const ItemList = ({ list, imgUrl }) => {
+const ItemList = ({ list }) => {
   return (
     <>
       <ul className="dogs_list">
-        {list.map((cur, idx) => (
-          <Link href={`/view/${idx}`}>
-            <li className="dogs_item" key={`${idx}_${new Date().toString()}`}>
-              <span>{cur}</span>
+        {list.map((cur) => (
+          <Link href={`/view/${cur.id}`}>
+            <li className="dogs_item" key={`${cur.id}_${new Date().toString()}`}>
+              <span>{cur.name}</span>
               <div className="img_wrap">
-                <img src={imgUrl[idx]} alt={cur} />
+                <img src={cur.image.url} alt={cur.name} />
               </div>
             </li>
           </Link>
