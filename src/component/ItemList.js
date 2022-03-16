@@ -6,8 +6,8 @@ const ItemList = ({ list }) => {
     <>
       <ul className="dogs_list">
         {list.map((cur) => (
-          <Link href={`/view/${cur.id}`}>
-            <li className="dogs_item" key={`${cur.id}_${new Date().toString()}`}>
+          <Link href={`/view/${cur.id}`} key={cur.id}>
+            <li className="dogs_item">
               <span>{cur.name}</span>
               <div className="img_wrap">
                 <img src={cur.image.url} alt={cur.name} />

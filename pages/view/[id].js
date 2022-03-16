@@ -1,51 +1,42 @@
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 const Post = () => {
   const router = useRouter();
-  const { id } = router.query;
-  const [dog, setDog] = useState({});
+  const {
+    query: { id },
+  } = router;
+  const [dog, setDog] = useState(null);
   const [imgUrl, setImgUrl] = useState('');
+  const [loading, setLoading] = useState(true);
 
   const API_URL = `https://api.thedogapi.com/v1/`;
-  const getData = async () => {
+  const getData = useCallback(async () => {
     try {
       const dogs = await axios.get(`${API_URL}breeds/${id}`);
-      setDog(dogs.data);
+      const img = await axios.get(`${API_URL}images/${dogs.data.reference_image_id}`);
+      setDog(() => dogs.data);
+      setImgUrl(img.data.url);
     } catch (error) {
       console.error(error);
     }
-  };
-  const getDataImg = async () => {
-    try {
-      const dogImg = await axios.get(`${API_URL}images/${dog.reference_image_id}`);
-      setImgUrl(dogImg.data.url);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  }, []);
 
   useEffect(() => {
     getData();
-  }, [id]);
-
-  useEffect(() => {
-    getDataImg();
-  }, [dog]);
+  }, [getData]);
 
   return (
     <div className="dog_wrap">
       <p>Post: {id}</p>
-      {!imgUrl.length ? (
-        <img src="/images/loading2.gif" alt="loading" className="loading" />
-      ) : (
-        <dl>
+      {loading && <img src="/images/loading2.gif" alt="loading" className="loading" />}
+      {dog && (
+        <dl style={{ display: loading ? 'none' : 'block' }}>
           <dt>{dog.name || '🦴'}</dt>
           <dd>
-            <img src={imgUrl} alt={dog.name} />
+            <img onLoad={() => setLoading(false)} src={imgUrl} alt={dog.name} />
           </dd>
-
           <dd>
             <ul>
               <li>
