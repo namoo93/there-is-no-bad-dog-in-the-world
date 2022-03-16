@@ -18,7 +18,6 @@ export default function Home() {
       Promise.all(list.map(async (dogs) => await axios.get(`https://dog.ceo/api/breed/${dogs}/images`))).then(
         (values) => {
           const imgsres = values.map((cur) => cur.data.message[0]);
-          console.log(imgsres);
           setImgUrl(imgsres);
         }
       );
@@ -36,7 +35,11 @@ export default function Home() {
         <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
         <title>There is no bad dog in the world</title>
       </Head>
-      <ItemList list={list} imgUrl={imgUrl} />
+      {!imgUrl.length ? (
+        <img src="/images/loading2.gif" alt="loading" className="loading" />
+      ) : (
+        <ItemList list={list} imgUrl={imgUrl} />
+      )}
     </>
   );
 }

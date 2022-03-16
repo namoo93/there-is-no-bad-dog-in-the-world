@@ -4,6 +4,10 @@
   padding: 0;
   margin: 0;
 }
+.loading {
+  margin-top: 100px;
+  width: 100px;
+}
 .header_wrap {
   padding: 40px 0 20px 0;
 }
@@ -53,6 +57,15 @@ h1 {
   background-color: #555;
   border-radius: 10px;
   cursor: pointer;
+  transition: 0.3s;
+}
+.dogs_list li:hover {
+  background-color: #fff;
+}
+
+.dogs_list li:hover span {
+  color: #555;
+  font-weight: bold;
 }
 
 .dogs_list span {
@@ -64,6 +77,7 @@ h1 {
   padding: 10px 0;
   width: 100%;
 }
+
 .dogs_list .img_wrap {
   overflow: hidden;
 }
