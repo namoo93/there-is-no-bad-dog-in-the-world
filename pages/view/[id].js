@@ -1,33 +1,39 @@
+import Head from 'next/head';
 import axios from 'axios';
-import { useRouter } from 'next/router';
-import { useCallback, useEffect, useState } from 'react';
 import Item from '../../src/component/Item';
 
-const Post = () => {
-  const router = useRouter();
-  const {
-    query: { id },
-  } = router;
-  const [dog, setDog] = useState(null);
-  const [imgUrl, setImgUrl] = useState('');
+const Post = ({ dog, imgUrl }) => {
+  return (
+    <>
+      {dog && (
+        <>
+          <Head>
+            <meta
+              name="description"
+              content={`${dog.name}, ${dog.temperament || '🦴'},${dog.bred_for || '🦴'},${dog.country_code || '🦴'},${
+                dog.breed_group || '🦴'
+              }`}
+            />
+            <title>{dog.name}</title>
+          </Head>
+          <Item dog={dog} imgUrl={imgUrl} />
+        </>
+      )}
+    </>
+  );
+};
 
-  const API_URL = `https://api.thedogapi.com/v1/`;
-  const getData = useCallback(async () => {
-    try {
-      const dogs = await axios.get(`${API_URL}breeds/${id}`);
-      const img = await axios.get(`${API_URL}images/${dogs.data.reference_image_id}`);
-      setDog(() => dogs.data);
-      setImgUrl(img.data.url);
-    } catch (error) {
-      console.error(error);
-    }
-  }, []);
+export const getServerSideProps = async (context) => {
+  // data from external API
+  const id = context.params.id;
+  const apiUrl = `https://api.thedogapi.com/v1/`;
+  const dogRes = await axios.get(`${apiUrl}breeds/${id}`);
+  const imgUrlRes = await axios.get(`${apiUrl}images/${dogRes.data.reference_image_id}`);
 
-  useEffect(() => {
-    getData();
-  }, [getData]);
+  const dog = dogRes.data;
+  const imgUrl = imgUrlRes.data.url;
 
-  return <Item dog={dog} imgUrl={imgUrl} id={id} />;
+  return { props: { dog, imgUrl } };
 };
 
 export default Post;

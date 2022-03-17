@@ -25,9 +25,10 @@ export default function Home() {
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="description" content="강아지 사전 페이지" />
         <title>There is no bad dog in the world</title>
       </Head>
-      {!list ? <img src="/images/loading2.gif" alt="loading" className="loading" /> : <ItemList list={list} />}
+      {!list.length ? <img src="/images/loading2.gif" alt="loading" className="loading" /> : <ItemList list={list} />}
     </>
   );
 }
