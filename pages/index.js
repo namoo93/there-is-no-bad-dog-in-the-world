@@ -3,8 +3,8 @@ import axios from 'axios';
 import Head from 'next/head';
 import ItemList from '../src/component/ItemList';
 
-export default function Home() {
-  const API_URL = `https://api.thedogapi.com/v1/breeds`;
+const Home = () => {
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const [list, setList] = useState([]);
 
   const getData = useCallback(async () => {
@@ -31,6 +31,8 @@ export default function Home() {
       {!list.length ? <img src="/images/loading2.gif" alt="loading" className="loading" /> : <ItemList list={list} />}
     </>
   );
-}
+};
+
+export default Home;
 
 //axios

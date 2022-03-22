@@ -16,6 +16,7 @@ const Post = ({ dog, imgUrl }) => {
             />
             <title>{dog.name}</title>
           </Head>
+
           <Item dog={dog} imgUrl={imgUrl} />
         </>
       )}
@@ -24,7 +25,6 @@ const Post = ({ dog, imgUrl }) => {
 };
 
 export const getServerSideProps = async (context) => {
-  // data from external API
   const id = context.params.id;
   const apiUrl = `https://api.thedogapi.com/v1/`;
   const dogRes = await axios.get(`${apiUrl}breeds/${id}`);
@@ -33,7 +33,12 @@ export const getServerSideProps = async (context) => {
   const dog = dogRes.data;
   const imgUrl = imgUrlRes.data.url;
 
-  return { props: { dog, imgUrl } };
+  return {
+    props: {
+      dog,
+      imgUrl,
+    },
+  };
 };
 
 export default Post;

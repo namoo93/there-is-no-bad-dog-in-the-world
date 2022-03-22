@@ -138,3 +138,8 @@ h1 {
 .dog_wrap dd img {
   width: 500px;
 }
+
+.err_404 {
+  padding: 20px;
+  color: #555;
+}
