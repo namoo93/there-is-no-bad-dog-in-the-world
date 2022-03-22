@@ -20,6 +20,12 @@ h1 {
   padding-top: 10px;
 }
 
+.footer {
+  padding: 20px;
+  font-size: 13px;
+  color: #999;
+}
+
 .search_tag {
   color: #555;
 }
